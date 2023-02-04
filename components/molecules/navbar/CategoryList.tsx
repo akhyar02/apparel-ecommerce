@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NavbarCategoryList() {
   return (
-    <ul className="flex gap-6 capitalize">
+    <ul className="flex gap-6 capitalize basis-1/3">
       <li>
         <Link
           href="/shop/categories/men"

@@ -4,7 +4,7 @@ import { FaUser } from "react-icons/fa";
 
 export default function NavbarUserActions() {
   return (
-    <ul className="flex gap-6">
+    <ul className="flex gap-6 basis-1/3 justify-end">
       <li>
         <Link href="/cart" className="relative">
           <BsFillCartFill />
