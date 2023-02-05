@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function Slider({ images }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full overflow-hidden">
       <Slides images={images} activeIndex={activeIndex} />
       <Navigation
         images={images}
