@@ -1,5 +1,6 @@
 import ArrowButton from "@/components/atoms/slider/buttons/ArrowButton";
 import NavButton from "@/components/atoms/slider/buttons/NavButton";
+import { useCallback, useEffect } from "react";
 
 export default function SliderNavigation({
   images,
@@ -21,6 +22,13 @@ export default function SliderNavigation({
       setActiveIndex(activeIndex + 1);
     }
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [activeIndex]);
 
   return (
     <>
