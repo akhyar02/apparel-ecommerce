@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-scrollbar-track: rgba(0, 0, 0, 0.1);
+  --color-scrollbar-thumb: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  overflow-y: overlay;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--color-scrollbar-thumb);
+  border-radius: 8px;
+}
+
 #__next {
   @apply flex flex-col min-h-screen;
 }
