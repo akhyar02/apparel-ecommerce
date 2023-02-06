@@ -27,6 +27,14 @@ export default function NavbarCategoryList() {
           Kids
         </Link>
       </li>
+      <li>
+        <Link
+          href="/shop/"
+          className="transition hover:text-neutral-600"
+        >
+          Shop
+        </Link>
+      </li>
     </ul>
   );
 }
