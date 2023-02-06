@@ -1,8 +1,6 @@
 import FeaturedProducts from "@/components/organisms/featured-products/FeaturedProducts";
 import FeaturedProductsCollage from "@/components/organisms/featured-products/HeroCollage";
 import Slider from "@/components/organisms/slider/Slider";
-import Image from "next/image";
-import Link from "next/link";
 
 export default function Home() {
   return (
