@@ -4,6 +4,8 @@ export type Product = {
   image: string;
   price: number;
   slug: string;
+  category: 'Men' | 'Kids' | 'Women';
+  collection: string | null
 };
 
 export type DropdownOption = {

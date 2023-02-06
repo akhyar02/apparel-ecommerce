@@ -25,13 +25,13 @@ export default function RangeDropdown({ filter }: Props) {
     ) => void;
   }>();
 
-  function handleApply(value1: number, value2: number) {
+  function handleApply(min: number, max: number) {
     router.replace(
       {
         pathname: router.pathname,
         query: {
           ...router.query,
-          [filter.label.toLowerCase()]: `${value1}-${value2}`,
+          [filter.label.toLowerCase()]: `${min}-${max}`,
         },
       },
       undefined,
@@ -65,12 +65,15 @@ export default function RangeDropdown({ filter }: Props) {
             type="text"
             value={min}
             onChange={(e) => {
-              if (
-                !isNaN(Number(e.target.value)) &&
-                Number(e.target.value) <= filter.max &&
-                Number(e.target.value) >= filter.min
-              )
+              if (!isNaN(Number(e.target.value)))
                 setMin(Number(e.target.value));
+            }}
+            onBlur={(e) => {
+              if (Number(e.target.value) > max) {
+                setMin(max);
+              } else if (Number(e.target.value) < filter.min) {
+                setMin(filter.min);
+              }
             }}
           />
           <span className="text-center">-</span>
@@ -79,19 +82,22 @@ export default function RangeDropdown({ filter }: Props) {
             type="text"
             value={max}
             onChange={(e) => {
-              if (
-                !isNaN(Number(e.target.value)) &&
-                Number(e.target.value) <= filter.max &&
-                Number(e.target.value) >= filter.min
-              )
+              if (!isNaN(Number(e.target.value)))
                 setMax(Number(e.target.value));
+            }}
+            onBlur={(e) => {
+              if (Number(e.target.value) < min) {
+                setMax(min);
+              } else if (Number(e.target.value) > filter.max) {
+                setMax(filter.max);
+              }
             }}
           />
         </div>
         <button
           className="px-2 py-1 text-white bg-gray-800 rounded-md"
           onClick={() => {
-            handleApply(filter.min, filter.max);
+            handleApply(min, max);
           }}
         >
           Apply

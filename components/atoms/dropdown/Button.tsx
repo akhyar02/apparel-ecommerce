@@ -36,7 +36,7 @@ const DropdownButton = forwardRef(({ label, children }: Props, ref: any) => {
         {label} <AiOutlineDown />
       </button>
       {showDropdown && (
-        <div className="absolute left-0 w-40 px-2 py-1 bg-white rounded-md shadow-lg top-10">
+        <div className="absolute z-10 left-0 w-40 px-2 py-1 bg-white rounded-md shadow-lg top-10">
           {children}
         </div>
       )}
