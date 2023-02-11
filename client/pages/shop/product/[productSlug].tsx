@@ -1,7 +1,12 @@
+import { Product } from "@/common/types";
 import AddToCartOrWishlist from "@/components/organisms/products/AddToCartOrWishlist";
+import { getProductBySlug, getProducts } from "@/services/product";
+import { GetStaticPropsContext } from "next";
 import Image from "next/image";
 
-export default function InnerProductPage() {
+export default function InnerProductPage({
+  product
+}: Props) {
   return (
     <section className="container flex gap-4 mx-auto mt-8">
       <div className="relative aspect-[3/4] w-1/3">
@@ -33,13 +38,47 @@ export default function InnerProductPage() {
   );
 }
 
-const product = {
-  id: 1,
-  name: "Product 1",
-  price: 100,
-  image:
-    "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=795&q=80",
-  category: "Men",
-  collection: "Autumn",
-  slug: "product-1",
+export const getStaticPaths = async () => {
+  const query = {
+    fields: ["slug"],
+  };
+  const products = await getProducts(query);
+  const paths = products.map((p) => ({
+    params: {
+      productSlug: p.slug,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
+  const productSlug = ctx?.params?.productSlug as string;
+  const query = {
+    fields: [
+      "name",
+      "price",
+      "id",
+      'slug',
+    ]
+  };
+  const product = await getProductBySlug(productSlug, query);
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      product,
+    },
+  };
+};
+
+type Props = {
+  product: Product;
 };

@@ -1,11 +1,13 @@
 import { Product } from "@/common/types";
 import FilterMenu from "@/components/organisms/filter-menu/FilterMenu";
 import ProductsGrid from "@/components/organisms/products/Grid";
+import { getProducts } from "@/services/product";
+import { GetStaticPropsContext } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function ProductPage() {
+export default function ProductPage({ products }: Props) {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const router = useRouter();
 
@@ -84,6 +86,15 @@ export default function ProductPage() {
   );
 }
 
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
+  const products = await getProducts();
+  return {
+    props: {
+      products,
+    },
+  };
+};
+
 const filters = [
   {
     label: "Category",
@@ -103,45 +114,6 @@ const rangeFilters = [
   },
 ];
 
-const products: Product[] = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: 100,
-    image:
-      "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=795&q=80",
-    category: "Men",
-    collection: "Autumn",
-    slug: "product-1",
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    price: 200,
-    image:
-      "https://images.unsplash.com/photo-1506152983158-b4a74a01c721?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80",
-    category: "Women",
-    collection: "Autumn",
-    slug: "product-2",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 300,
-    image:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    category: "Kids",
-    collection: "Autumn",
-    slug: "product-3",
-  },
-  {
-    id: 4,
-    name: "Product 4",
-    price: 400,
-    image:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    category: "Men",
-    collection: null,
-    slug: "product-4",
-  },
-];
+type Props = {
+  products: Product[];
+}
